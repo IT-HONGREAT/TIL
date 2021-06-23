@@ -1,0 +1,5 @@
+user=인영
+number=01094802331
+company=kt
+model=galaxy8+
+os=Android
