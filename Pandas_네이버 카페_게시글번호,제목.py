@@ -39,13 +39,15 @@ for i in splitted_3:
     date_list.append(i.split('</td')[0])
 
 pd_arr3 = pd.Series(date_list)
-#날짜_공지의 날짜 삭제
-# n_pd_arr3 = pd_arr3.drop(0)  #시리즈의 row삭제..ㅠ
+
 date_list.pop(0)  #날짜를 모은 리스트를 pop시킴
 
 
-#전체 출력
-data = pd.DataFrame({'글번호': number_list, '제목': title_list,'날짜':date_list})
+
+# 글번호를 리스트로 그냥 받고, 인덱스로 지정해서 데이터프레임화시킴.
+dict_data = {'제목': title_list,'날짜':date_list}
+
+data = pd.DataFrame(dict_data, index=number_list)
 
 
 print(data)
