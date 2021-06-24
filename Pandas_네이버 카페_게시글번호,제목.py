@@ -39,8 +39,6 @@ for i in splitted_3:
     date_list.append(i.split('</td')[0])
 
 pd_arr3 = pd.Series(date_list)
-#날짜_공지의 날짜 삭제
-# n_pd_arr3 = pd_arr3.drop(0)  #시리즈의 row삭제..ㅠ
 date_list.pop(0)  #날짜를 모은 리스트를 pop시킴
 
 #작성자
@@ -53,8 +51,34 @@ for i in splitted_4:
     nickname_list.append(i.split(',')[3])
 nickname_list.pop(0)
 
+#조회수
+
+splitted_5 = temp.split('<td class="td_view">')
+splitted_5.pop(0)
+view_list = []
+
+for i in splitted_5:
+    view_list.append(i.split('</td')[0])
+view_list.pop(0)
+
+#좋아요
+
+splitted_6 = temp.split('<td class="td_likes">')
+splitted_6.pop(0)
+like_list = []
+
+for i in splitted_6:
+    like_list.append(i.split('</td>')[0])
+like_list.pop(0)
+
 #_set_index()
-dict_data = {'글번호': number_list, '제목': title_list,'날짜':date_list,"작성자":nickname_list}
+dict_data = {'글번호': number_list,
+             '제목': title_list,
+             '날짜':date_list,
+             "작성자":nickname_list,
+             '조회수': view_list,
+             '좋아요': like_list}
+
 data = pd.DataFrame(dict_data)
 num_df = data.set_index('글번호')
 
