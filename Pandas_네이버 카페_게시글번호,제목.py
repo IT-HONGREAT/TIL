@@ -43,9 +43,18 @@ pd_arr3 = pd.Series(date_list)
 # n_pd_arr3 = pd_arr3.drop(0)  #시리즈의 row삭제..ㅠ
 date_list.pop(0)  #날짜를 모은 리스트를 pop시킴
 
+#작성자
+
+splitted_4 = temp.split('<div class="pers_nick_area">')
+
+splitted_4.pop(0)
+nickname_list = []
+for i in splitted_4:
+    nickname_list.append(i.split(',')[3])
+nickname_list.pop(0)
 
 #_set_index()
-dict_data = {'글번호': number_list, '제목': title_list,'날짜':date_list}
+dict_data = {'글번호': number_list, '제목': title_list,'날짜':date_list,"작성자":nickname_list}
 data = pd.DataFrame(dict_data)
 num_df = data.set_index('글번호')
 
