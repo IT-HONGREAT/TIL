@@ -1,12 +1,12 @@
 import pandas as pd
 
+
 class CafeCrawler:
 
     def __init__(self, file):
         f = open(file, 'r', encoding='UTF-8')
         self.source = f.read()
         self.df = pd.DataFrame()
-
 
     def generate_dataframe(self):
 
@@ -22,7 +22,7 @@ class CafeCrawler:
         return self.df
 
     def _split_number(self):
-        #open => read 한 temp를 함수처리.....
+        # open => read 한 temp를 함수처리.....
 
         splitted = self.source.split('<div class="inner_number">')
         splitted.pop(0)
@@ -78,12 +78,16 @@ class CafeCrawler:
     def _split_view(self):
 
         splitted_5 = self.source.split('<td class="td_view">')
+        # splitted_5 = splitted_5[2:]
         splitted_5.pop(0)
+        splitted_5.pop(0)
+
         view_list = []
 
         for i in splitted_5:
-            view_list.append(i.split('</td')[0])
-        view_list.pop(0)
+            # print(type(i.split('</td')[0]))
+            # print(i.split('</td')[0])
+            view_list.append(int(i.split('</td')[0]))
 
         self.df['조회수'] = view_list
 
@@ -98,4 +102,15 @@ class CafeCrawler:
         like_list.pop(0)
 
         self.df['좋아요'] = like_list
+
+    def filter_view(self, low, **kwargs):
+
+        if not kwargs.get('high'):
+            return self.df[self.df['조회수'] >= low]
+
+        else:
+            return self.df[(self.df['조회수'] < kwargs['high']) & (self.df['조회수'] >= low)]
+
+
+
 

@@ -2,7 +2,8 @@ import pandas as pd
 
 with open('html_source.txt',encoding='utf-8') as f:
     temp = f.read()
-# 게시글 번호
+
+#게시글 번호
 splitted = temp.split('<div class="inner_number">')
 splitted.pop(0)
 
