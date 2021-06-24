@@ -52,14 +52,20 @@ class CafeCrawler:
     def _split_date(self):
 
         splitted_3 = self.source.split('<td class="td_date">')
+        splitted_3 = splitted_3[2:]
+        # splitted_3.pop(0)
 
-        splitted_3.pop(0)
         date_list = []
 
+        
         for i in splitted_3:
-            date_list.append(i.split('</td')[0])
+            date_sep = i.split('</td')[0]
+            date_remove_dot = date_sep.replace(".","")
+            date_list.append(int(date_remove_dot))
 
-        date_list.pop(0)  # 날짜를 모은 리스트를 pop시킴
+
+        print(date_list)
+        # date_list.pop(0)  # 날짜를 모은 리스트를 pop시킴
 
         self.df['날짜'] = date_list
 
@@ -78,15 +84,14 @@ class CafeCrawler:
     def _split_view(self):
 
         splitted_5 = self.source.split('<td class="td_view">')
-        # splitted_5 = splitted_5[2:]
+
         splitted_5.pop(0)
         splitted_5.pop(0)
 
         view_list = []
 
         for i in splitted_5:
-            # print(type(i.split('</td')[0]))
-            # print(i.split('</td')[0])
+
             view_list.append(int(i.split('</td')[0]))
 
         self.df['조회수'] = view_list
@@ -110,6 +115,15 @@ class CafeCrawler:
 
         else:
             return self.df[(self.df['조회수'] < kwargs['high']) & (self.df['조회수'] >= low)]
+
+    def filter_date(self, start, **kwargs):
+
+
+        if not kwargs.get('high'):
+            return self.df[self.df['날짜'] >= start]
+        else:
+            return self.df[(self.df['날짜'] < kwargs['high']) & (self.df['날짜'] >= start)]
+
 
 
 
