@@ -57,11 +57,11 @@ class CafeCrawler:
 
         date_list = []
 
-        
+
         for i in splitted_3:
             date_sep = i.split('</td')[0]
-            date_remove_dot = date_sep.replace(".","")
-            date_list.append(int(date_remove_dot))
+            # date_remove_dot = date_sep.replace(".","")
+            date_list.append(date_sep)
 
 
         print(date_list)
